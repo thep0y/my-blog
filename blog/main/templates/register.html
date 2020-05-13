@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    注册新账号
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/login-and-register.css') }}">
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/register.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form class="form-signin" action="#" method="post" onsubmit="return check()">
+            <h2 class="form-signin-heading">注册新账号</h2><br>
+            <label for="username">用户名：</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="请输入用户名" autofocus>
+            <span id="username_status"></span><br>
+            <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码">
+            <span id="password_status"></span><br>
+            <label for="email">邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+            <input type="text" name="email" id="email" class="form-control" placeholder="请输入邮箱">
+            <span id="email_status"></span><br>
+            <label for="phone">手机号：</label>
+            <input type="text" name="phone" id="phone" class="form-control" placeholder="请输入手机号">
+            <span id="phone_status"></span><br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+        </form>
+    </div>
+{% endblock %}

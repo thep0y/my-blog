@@ -1,0 +1,120 @@
+{% extends 'admin/admin.html' %}
+
+{% block title %}
+    添加新类型
+{% endblock %}
+
+{% block style %}
+    {{ super() }}
+    <style>
+        #addTypes {
+            background: #066;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .col-lg-6 {
+            width: 400px;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+        .typesInput {
+            position: absolute;
+            width: auto;
+            left: 370px;
+            top: 50px;
+        }
+
+        .submit {
+            position: relative;
+            margin-top: 10px;
+            top: 94px;
+            width: 370px;
+            left: 360px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="typesInput">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="type" placeholder="请输入新类型">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary addType" type="button">＋</button>
+                        <button class="btn btn-primary reduceType disabled" type="button">－</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <button class="btn btn-lg btn-primary btn-block submit" id="submit">提交</button>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        let typeInput = $('.typesInput')
+        typeInput.on('click', 'button.addType:not(.disabled)', function (event) {
+            let rows = $('div.row')
+            if (rows.length >= 10) {
+                alert('一次最多添加 10 个新类型')
+                $('.addType').last().addClass('disabled')
+            } else {
+                let lastRow = rows.last()
+                let row = lastRow.clone()
+                row.find('input').val('')
+                $(this).addClass('disabled')
+                $('.reduceType').last().removeClass('disabled')
+                $('.typesInput').append(row)
+                let s = $('#submit')
+                let oldTop = s.css('top')
+                s.css('top', (parseInt(oldTop) + 44) + 'px')
+            }
+        })
+        typeInput.on('click', 'button.reduceType:not(.disabled)', function (event) {
+            let rows = $('div.row')
+            if (rows.length === 1) {
+                alert('至少添加 1 个类型')
+            } else {
+                $(this).parents('.row').remove()
+                let s = $('#submit')
+                let oldTop = s.css('top')
+                s.css('top', (parseInt(oldTop) - 44) + 'px')
+            }
+        })
+        $('#submit').click(function () {
+            let types = ''
+            $.each($('input[name="type"]'), function (index, value) {
+                v = value.value
+                types += v + '#'
+            })
+            types = types.substring(0, types.length-1)
+            if (types.length) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://<your host/your domain>/api/types/?token=' + getToken(),
+                    dataType: 'json',
+                    data: {
+                        type: types
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        let err = jqXHR.responseText
+                        let msg = JSON.parse(err)
+                        alert(msg.error || JSON.stringify(msg.message).replace('{', '').replace('}', ''))
+                    },
+                    success: function (data) {
+                        alert('添加成功')
+                        window.location.href = 'http://<your host/your domain>/admin/gettypes/'
+                    }
+
+                })
+            }
+        })
+    </script>
+{% endblock %}

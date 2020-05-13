@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    写新文章
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/blog/markdownhere.css') }}">
+    <style>
+        .content {
+            height: 880px;
+        }
+
+        #navbar li {
+            margin: 0;
+        }
+
+        div.newBlog {
+            position: absolute;
+            width: 1100px;
+            height: 30px;
+            top: 20px;
+            left: 20px;
+        }
+
+        #title {
+            width: 600px;
+        }
+
+        div.typeTitle {
+            position: relative;
+            top: 0;
+            height: 29px;
+        {#background: #d5d5d5;#}
+        }
+
+        div.type {
+            float: left;
+            margin: 1px;
+        }
+
+        div.type label {
+            margin-top: 4px;
+        }
+
+        #type {
+            height: 29px;
+        }
+
+        div.title {
+            float: right;
+        }
+
+        #area {
+            position: absolute;
+            top: 70px;
+            width: 1100px;
+        }
+
+        #md-area {
+            height: 700px;
+            width: 529px;
+        }
+
+        #show-area {
+            height: 700px;
+            width: 528px;
+            overflow-y: scroll;
+        }
+
+        .btn-primary {
+            position: absolute;
+            margin: 10px 0 0 20px;
+            text-shadow: black 0 0.1em 0.2em;
+            width: 100px;
+            bottom: 5px;
+            right: 20px;
+        }
+
+        #isPrivate {
+            position: absolute;
+            bottom: 7px;
+            right: 150px;
+        }
+
+        #htmlText, #MDText {
+            position: absolute;
+            top: 50px;
+        }
+
+        #MDText {
+            right: 0;
+        }
+
+        .line1, .line2 {
+            position: absolute;
+            width: 1140px;
+            border: #888888 1px double;
+            left: -20px;
+        }
+
+        .line1 {
+            top: -13px;
+        }
+
+        .line2 {
+            top: 40px;
+        }
+
+        div.uploadIMG {
+            position: absolute;
+            left: 520px;
+            top: 50px;
+        }
+
+        #upload-img-icon:hover {
+            cursor: pointer;
+        }
+
+        #show-area img {
+            width: 1240px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="newBlog">
+        <div class="typeTitle">
+            <div class="type">
+                <label for="type">类别：</label>
+                <select name="type" id="type">
+                </select>
+            </div>
+            <div class="title">
+                <label for="title">标题：</label>
+                <input type="text" id="title" name="title" placeholder="新文章标题"><span>(长度限制为40个字符)</span>
+            </div>
+        </div>
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div id="htmlText">
+            <span>这里输入MarkDown原文：</span>
+        </div>
+        <div class="uploadIMG">
+            <label for="upload-img"><span id="upload-img-icon" class="glyphicon glyphicon-picture" title="上传图片"></span></label>
+            <input type="file" id="upload-img" name="upload-img" accept="image/gif, image/jpeg, image/png, image/jpg">
+        </div>
+        <div id="MDText">
+            <span>这里输出HTML：</span>
+        </div>
+        <div id="area">
+            <table>
+                <tr>
+                    <td><textarea name="" id="md-area" onkeyup=mdSwitch()></textarea></td>
+                    <td>
+                        <div id="show-area" class="clearfix"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="isPrivate">
+        <label for="private">是否保存为私密文章</label>
+        <input type="checkbox" name="private" id="private" value="1">
+    </div>
+    <button class="btn btn-primary" id="publishNewBlog">发布</button>
+
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/showdown.min.js') }}"></script>
+    <script>
+        function mdSwitch() {
+            var mdValue = document.getElementById("md-area").value;
+            var converter = new showdown.Converter();
+            var html = converter.makeHtml(mdValue);
+            document.getElementById("show-area").innerHTML = html;
+        }
+
+        let allTypes = $('#type')
+        $.ajax({
+            type: 'GET',
+            url: 'http://<your host/your domain>/api/types/',
+            success: function (data) {
+                let html = '<option value=0>选择文章类型</option>'
+                $.each(data.data, function (index, value) {
+                    html += '<option value=' + value.id + '>' + value.type + '</option>'
+                })
+                allTypes.html(html)
+            }
+        })
+
+        $('#upload-img').change(function () {
+            let img = $('#upload-img').prop('files')[0]
+            let formData = new FormData()
+            formData.append('name', $("#id_name").val())
+            formData.append('img', img)
+            $.ajax({
+                type: 'POST',
+                url: '/upload/',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (data) {
+                    let mdArea = $('#md-area')
+                    let mdText = mdArea.val()
+                    console.log(mdArea.rows)
+                    let imgUrl = '![' + data.oldName + ']' + '(http://<your host/your domain>/static/img/' + data.filename + ')'
+                    mdArea.val(mdText + imgUrl)
+                }
+            })
+        })
+        $('#publishNewBlog').click(function () {
+            let $title = $('#title')
+            let title = $title.val().trim()
+            let type = $('#type').val()
+            if (type == 0) {
+                alert('请选择文章类型')
+            } else {
+                if (!title) {
+                    alert('标题不能为空')
+                    /* 还得限制标题长度不能超过40个字符 */
+                } else {
+                    console.log(title.length)
+                    if (title.length > 40) {
+                        alert('标题字符数量不能超过40个字符！')
+                    } else {
+                        let isPrivate = $('#private').prop('checked')
+                        let mdArea = $('#md-area')
+                        let mdText = mdArea.val()
+                        if (mdText.length < 2) {
+                            alert('内容最少包含2个字符！')
+                        } else {
+                            if (!isPrivate) { /* ajax传递的bool值会转换为字符串，对python来说所有的非空字符串都是true，只需将false的bool值赋予空字符串就行 */
+                                isPrivate = ''
+                            }
+                            $.ajax({
+                                type: 'POST',
+                                url: 'http://<your host/your domain>/api/blogs/?token=' + getToken(),
+                                data: {
+                                    type: type,
+                                    title: title,
+                                    content: mdText,
+                                    is_private: isPrivate
+                                },
+                                success: function (data) {
+                                    location.href = data.data.url
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    let err = jqXHR.responseText
+                                    let msg = JSON.parse(err)
+                                    alert(msg.error || JSON.stringify(msg.message).replace('{', '').replace('}', ''))
+                                },
+                            })
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %}
+
+    {% endblock %}
+    <link rel="icon" href="{{ url_for('static',filename='favicon.ico') }}">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <style>
+        body {
+            background-color: #dedede;
+        }
+
+        .content {
+            position: absolute;
+            background-color: white;
+            width: 1140px;
+            height: 840px;
+            left: 382.5px;
+            padding: 0 10px;
+        }
+    </style>
+    {% block style %}
+
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="{{ url_for('blue.index') }}" class="navbar-brand" title='回到主页'><img id="logo"
+                                                                            src="{{ url_for('static',filename='favicon.ico') }}"
+                                                                            alt=""></a>
+            <a class="navbar-brand" href="{{ url_for('blue.index') }}"  title='回到主页'>无空的博客</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                {% block index %}
+                    <li><a href="/"  title='回到主页'>主页</a></li>
+                {% endblock %}
+                {#                <li><a href="#">关于</a></li>#}
+                <li><a href="mailto:thepoy@163.com">联系我</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" id="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索标题、内容或作者" id="search-input">
+                </div>
+                <button type="button" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right" id="topbar-right">
+                {#                <li class="types" id=""><a href="#">文章类型</a></li>#}
+                <li class="dropdown" id="types">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">文章类型 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    </ul>
+                </li>
+
+                <li class="types" id="login"><a href="{{ url_for('blue.login') }}">登录</a></li>
+                <li class="types" id="register"><a href="{{ url_for('blue.register') }}">注册</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+{% block sidebar %}
+
+{% endblock %}
+
+<div class="content">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+<script type="text/javascript" src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='js/base.js') }}"></script>
+
+{% block js %}
+{% endblock %}
+</body>
+</html>

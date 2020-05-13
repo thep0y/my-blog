@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    搜索结果
+{% endblock %}
+
+{% block style %}
+    <style>
+        .content {
+            height: initial;
+            padding-bottom: 60px;
+        }
+
+        #searchResultTile {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-weight: bold;
+            font-size: 26px;
+        }
+
+        #searchCount {
+            position: absolute;
+            top: 35px;
+            left: 130px;
+            color: #9d9d9d;
+        }
+
+        .keyWord {
+            color: red;
+        }
+
+        div.split-line {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            height: 1px;
+            width: 1140px;
+            border: #b6b6b6 1px double;
+        }
+
+
+        div.pages {
+            position: absolute;
+            left: 740px;
+            width: 400px;
+            height: 30px;
+            text-align: right;
+            margin: 0 auto 10px auto;
+            font-size: 13px;
+            padding-right: 20px;
+        }
+
+        div.top {
+            top: 25px;
+            color: white;
+        }
+
+        div.bottom {
+            bottom: 5px;
+        }
+
+        #result-list {
+            margin-top: 70px;
+        }
+
+        #result-list ul li {
+            display: inline-block;
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .blog-title {
+            font-size: 16px;
+            text-decoration: underline;
+            color: #00C;
+        }
+
+        .blog-content {
+            display: block;
+            margin: 0;
+            width: 700px;
+            font-size: 13px;
+        }
+
+        .publish-time {
+            color: #3A8000;
+        }
+
+        .result span a {
+            color: #666;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <span id="searchResultTile">搜索结果</span><span id="searchCount"></span>
+    <div class="split-line"></div>
+    <div class="pages top"></div>
+    <div class="pages bottom"></div>
+    <div id="result-list">
+        <ul>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/search.js') }}"></script>
+{% endblock %}

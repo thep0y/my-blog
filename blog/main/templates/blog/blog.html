@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    当前文章
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/blog/markdownhere.css') }}">
+    <style>
+        .content {
+            padding-top: 20px;
+            height: auto;
+        }
+
+        #navbar li {
+            margin: 0;
+        }
+
+        div.newBlog {
+            position: absolute;
+            width: 1100px;
+            height: 30px;
+            top: 20px;
+            left: 20px;
+        }
+
+        #title {
+            width: 600px;
+        }
+
+        div.typeTitle {
+            position: relative;
+            top: 0;
+            height: 29px;
+        }
+
+        div.type {
+            float: left;
+            margin: 1px;
+        }
+
+        div.type label {
+            margin-top: 4px;
+        }
+
+        #type {
+            height: 29px;
+        }
+
+        div.title {
+            float: right;
+        }
+
+        #area {
+            width: 1140px;
+            margin-left: -10px;
+            border: #888888 5px;
+            border-style: solid none;
+        }
+
+        #area td {
+            width: 1140px;
+        }
+
+        div.uploadIMG {
+            position: absolute;
+            left: 520px;
+            top: 50px;
+        }
+
+        #upload-img-icon:hover {
+            cursor: pointer;
+        }
+
+        #show-area img {
+            width: 1110px;
+        }
+
+        #show-area {
+            width: 1120px;
+            margin-left: 10px;
+        }
+
+        #show-area img {
+            border-radius: 3px;
+            box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+            background: #FBFBFB;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        #title, #author {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #title {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        #author {
+            margin: 5px 0 5px 0;
+        }
+
+        #author a {
+            color: #8c8c8c;
+        }
+
+        #publishTime {
+            color: #8c8c8c;
+            text-align: right;
+            margin: 0 auto 0 auto;
+        }
+
+        #addComment {
+            width: 1120px;
+            height: 150px;
+        }
+
+        #publishAddComment {
+            display: block;
+            margin: 0 auto 0 1030px;
+        }
+
+        .commentsArea {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .comment {
+            border: #8c8c8c 1px;
+            border-style: solid none;
+            margin: -1px 0 0 -1px;
+        }
+
+        .pi {
+            float: right;
+            margin-right: 20px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .comment-info, .pages {
+            text-align: right;
+            margin: 0 auto 10px auto;
+            font-size: 13px;
+        }
+
+        .pages {
+            margin-top: 20px;
+        }
+
+        .comment-publish-time, .type {
+            color: #8c8c8c;
+        }
+
+        blockquote {
+            font-size: 14px;
+        }
+
+        .edit-comments {
+            display: inline-block;
+            float: left;
+            margin-left: 20px;
+        }
+
+        #edit-blog {
+            margin: 20px auto auto 20px;
+        }
+
+        input#title {
+            font-size: 16px;
+            font-weight: normal;
+            text-align: left;
+            width: 600px;
+            margin-left: 270px;
+        }
+
+        textarea#show-area {
+            height: 800px;
+            font-size: 15px;
+            margin-bottom: 40px;
+            overflow-y: scroll;
+        }
+
+        button#confirm, button#cancel {
+            position: relative;
+            right: -1000px;
+            top: -20px;
+        }
+
+        #favorite {
+            display: block;
+            margin-top: -30px;
+            margin-bottom: 20px;
+            margin-left: 531px;
+        }
+
+        #delete-favorite {
+            display: block;
+            margin-top: -30px;
+            margin-bottom: 20px;
+            margin-left: 516px;
+        }
+
+        #manage-blog {
+            margin-bottom: -20px;
+        }
+
+        #deleted {
+            left: 90px;
+        }
+
+        .manage-comment label {
+            margin-left: 40px;
+        }
+
+        #reason {
+            width: 400px;
+        }
+
+        #confirm-reason {
+            margin-left: 20px;
+        }
+
+        .manage-comment {
+            display: inline-block;
+            float: left;
+        }
+
+        #comments-area .clearfix {
+            padding-left: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="type"></div>
+    <div id="title"></div>
+    <div id="author" class="author"></div>
+    <div id="publishTime"></div>
+    <div id="area">
+        <div id="show-area" class="clearfix"></div>
+    </div>
+    <br>
+    <br>
+    <div class="addComment">
+        <textarea name="addComment" id="addComment" autofocus></textarea>
+        <span style="display: inline-block; float: left;color: #8c8c8c;">（注意：快捷回复支持Markdown，暂不支持实时预览。如果你对Markdown不熟悉可直接回复文本。<br>&nbsp;&nbsp;&nbsp;&nbsp;进行快捷回复时，请勿移动光标位置，否则可能会导致排版混乱）</span>
+        <button id="publishAddComment">发布评论</button>
+    </div>
+    <p class="commentsArea">评论区：</p>
+    <div id="comments-area"></div>
+    <div class="pages"></div>
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/showdown.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/blog.js') }}"></script>
+{% endblock %}

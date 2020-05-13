@@ -1,0 +1,51 @@
+body {
+    padding-top: 50px;
+}
+
+img#logo {
+    height: 40px;
+    margin: -10px auto;
+}
+
+.pages {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.pages a, .pages strong {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 3px 8px 7px 8px;
+    height: 26px;
+    background-repeat: no-repeat;
+    font-weight: 700;
+    color: #266cb5;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+}
+
+.pages strong {
+    background-color: #266cb5;
+    color: white;
+}
+
+.content a:hover {
+    color: #F60 !important;
+}
+
+#next {
+    padding-right: 25px;
+    background-image: url(../../static/img/arw_r.gif);
+    background-position: 90% 50%;
+}
+
+#prev {
+    padding-left: 25px;
+    background-image: url(../../static/img/arw_l.gif);
+    background-position: 10px 50%;
+}
+
+div.blog a:hover {
+    color: #F60 !important;
+}

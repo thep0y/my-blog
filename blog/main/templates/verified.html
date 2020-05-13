@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <meta http-equiv="refresh" content="2;url={{ url_for('blue.login') }}"/>
+{% endblock %}
+{% block style %}
+    <style>
+        .tips{
+            position: absolute;
+            text-align: center;
+            height: 200px;
+            margin: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    .tipsText{
+        font-size: 18px;
+	text-decoration: underline;
+	color: #00C;
+    }
+    a{
+        color: black;
+        text-decoration: black;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}
+    邮箱验证成功
+{% endblock %}
+
+{% block content %}
+    <div class="tips">
+        <a class="tipsText" href="{{ url_for('blue.login') }}">您的邮箱已验证，即将跳转登录页面。如果没有自动跳转，您可点击这行文字进行跳转。</a>
+    </div>
+{% endblock %}

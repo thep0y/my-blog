@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    个人中心
+{% endblock %}
+
+{% block style %}
+    <style>
+        .change {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            margin-left: 250px;
+            border: #888888 1px solid;
+            width: 600px;
+            padding-left: 100px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        label {
+            text-align: justify;
+            text-justify: inter-ideograph;
+            width: 80px;
+        }
+
+        .change .confirm {
+            margin-top: 10px;
+            margin-left: 180px;
+        }
+
+        .notLogin {
+            font-size: 30px;
+            font-weight: bold;
+            font-style: italic;
+            color: #606060;
+            text-shadow: #8c8c8c 1px 1px 5px;
+            position: absolute;
+            line-height: 50px;
+            left: 525px;
+            top: 395px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/account.js') }}"></script>
+{% endblock %}

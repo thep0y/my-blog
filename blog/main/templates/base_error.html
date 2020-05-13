@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        .error{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1 class="error">{% block error %}{% endblock %}</h1>
+<hr>
+<p class="error">{% block detail %}{% endblock %}</p>
+</body>
+</html>

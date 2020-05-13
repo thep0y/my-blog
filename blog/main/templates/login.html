@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    登录
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/login-and-register.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for get_flashed_message in get_flashed_messages() %}
+            <span style="color: red">{{ get_flashed_message }}</span>
+        {% endfor %}
+
+        <form class="form-signin" action="#" method="post">
+            <h2 class="form-signin-heading">登录</h2><br>
+            <label for="username" class="sr-only">用户名：</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="请输入用户名、邮箱或手机号" required
+                   autofocus>
+            <span id="username_status"></span><br>
+            <label for="password" class="sr-only">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="请输入密码" required>
+            <span id="password_status"></span><br>
+            <button class="btn btn-lg btn-primary btn-block" id="submit" type="button">登录</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}

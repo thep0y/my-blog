@@ -1,0 +1,15 @@
+{% extends 'user/myBlog.html' %}
+
+{% block style %}
+    {{ super() }}
+    <style>
+        button.delete-favorite {
+            width: 102px;
+            margin: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/myFavorite.js') }}"></script>
+{% endblock %}

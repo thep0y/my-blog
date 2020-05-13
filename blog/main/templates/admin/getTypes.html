@@ -1,0 +1,146 @@
+{% extends 'admin/admin.html' %}
+
+{% block title %}
+    获取所有类型
+{% endblock %}
+
+{% block style %}
+    {{ super() }}
+    <style>
+        #getTypes {
+            background: #066;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #allTypes {
+            position: absolute;
+            width: 600px;
+            top: 60px;
+            left: 270px;
+            font-size: 16px;
+        }
+
+        .eachType {
+            width: 600px;
+            height: 60px;
+            position: relative;
+            border: #1b6d85 1px solid;
+            border-radius: 15px;
+            background: #eee;
+            margin: 0 -1px -1px 0;
+        }
+
+        .btn-primary {
+            float: right;
+            margin-top: 13px;
+            margin-right: 20px;
+        }
+
+        .typeName {
+            transform: translate(0, -50%);
+            top: 50%;
+            position: absolute;
+            left: 20px;
+        }
+
+        input.typeName {
+            height: 34px;
+            width: 360px;
+            border-radius: 6px;
+            border: 1px solid #DBDBDB;
+            padding-left: 8px
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="allTypes">
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    if (getToken()){}
+        let allTypes = $('#allTypes')
+        $.ajax({
+            type: 'GET',
+            url: 'http://<your host/your domain>/api/types/',
+            success: function (data) {
+                let html = ''
+                $.each(data.data, function (index, value) {
+                    html += '<div class="eachType"><span class="typeName" id=' + value.type + ' >' + (index + 1) + '.' + value.type + '</span><button class="btn btn-primary deleted" type="button">删除</button><button class="btn btn-primary changed" type="button">修改</button></div>'
+                })
+                allTypes.html(html)
+            }
+        })
+        allTypes.on('click', 'button.changed', function () {
+            let parent = $(this).parent()
+            let id = parent.find('span').attr('id') || parent.find('input').attr('id')
+            if ($(this).text() === '修改') {
+                let oldType = parent.find('span').text()
+                parent.children('#' + id)[0].outerHTML = "<input class='typeName' id='" + id + "' value='" + id + "' data-oldtype='" + oldType + "'>"
+                $(this).text('确认')
+                parent.find('.deleted').text('取消')
+            } else if ($(this).text() === '确认') {
+                confirmChange(parent, id)
+            }
+        })
+        allTypes.on('click', 'button.deleted', function () {
+            // 取消和删除按钮的功能实现
+            let parent = $(this).parent()
+            let id = parent.find('span').attr('id') || parent.find('input').attr('id')
+            if ($(this).text() === '删除') {
+                let result = confirm('你确定要删除类型「' + id + '」吗？如果删除，可能会造成所有此类型的文章出现异常，请再次确认你是否要删除类型「' + id + '」！')
+                console.log(result)
+                // TODO 删除类型未实现
+            } else if ($(this).text() === '取消') {
+                let oldType = parent.find('input').attr('data-oldtype')
+                parent.children('#' + id)[0].outerHTML = "<span class='typeName' id='" + id + "'>" + oldType + "</span>"
+                $(this).text('删除')
+                parent.find('.changed').text('修改')
+            }
+        })
+        allTypes.on('keydown', 'input', function (event) {
+            if (event.keyCode === 13) {
+                let parent = $(this).parent()
+                let id = parent.find('span').attr('id') || parent.find('input').attr('id')
+                confirmChange(parent, id)
+            }
+        })
+
+        function confirmChange(parent, id) {
+            let newType = parent.find('input').val().trim()
+            let oldType_ = parent.find('input').attr('data-oldtype')
+            let oldType__ = oldType_.split('.')
+            let oldType = oldType__[1]
+            let num = oldType__[0]
+            if (newType === oldType) {
+                alert('类型未改变')
+                parent.children('#' + id)[0].outerHTML = "<span class='typeName' id='" + id + "'>" + oldType_ + "</span>"
+                parent.find('.changed').text('修改')
+                parent.find('.deleted').text('删除')
+            } else {
+                $.ajax({
+                    type: 'PUT',
+                    url: 'http://<your host/your domain>/api/types/?token=' + getToken(),
+                    data: {
+                        oldType: oldType,
+                        newType: newType,
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        let err = jqXHR.responseText
+                        let msg = JSON.parse(err)
+                        alert(msg.error || JSON.stringify(msg.message).replace('{', '').replace('}', ''))
+                        console.log('修改失败')
+                    },
+                    success: function (data) {
+                        parent.children('#' + id)[0].outerHTML = "<span class='typeName' id='" + newType + "'>" + num + '.' + newType + "</span>"
+                        parent.find('.changed').text('修改')
+                        parent.find('.deleted').text('删除')
+                    }
+                })
+            }
+        }
+    </script>
+{% endblock %}

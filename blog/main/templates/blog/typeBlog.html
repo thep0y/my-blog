@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block style %}
+    {{ super() }}
+    <style>
+        #typeBlogTile {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-weight: bold;
+            font-size: 26px;
+        }
+
+        #noBlog {
+            font-size: 20px;
+            font-style: oblique;
+            font-weight: bold;
+            position: absolute;
+            left: 490px;
+            top: 400px;
+            color: #9d9d9d;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/typeBlog.js') }}"></script>
+{% endblock %}

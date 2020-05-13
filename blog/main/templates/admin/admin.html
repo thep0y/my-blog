@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+    后台管理
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sideBar">
+        <div>
+            <span class="menuSpan">文章类型</span>
+            <a href="{{ url_for('blue.admin_get_types') }}" id="getTypes">查看所有类型</a>
+            <a href="{{ url_for('blue.admin_add_types') }}" id="addTypes">添加新类型</a>
+        </div>
+        <div>
+            <span class="menuSpan">审核文章</span>
+            <a href="{{ url_for('blue.ganvas') }}" id="ganvas">查看所有待审核文章</a>
+            <a href="javascript:" id="audit-blog">审核文章</a>
+            <a href="javascript:">添加新类型</a>
+        </div>
+        <div>
+            <span class="menuSpan">封禁和解封</span>
+            <a href="javascript:">封禁和解封文章</a>
+            <a href="javascript:">封禁和解封用户</a>
+            <a href="javascript:">封禁和解封IP</a>
+        </div>
+        <div>
+            <span class="menuSpan">网站管理</span>
+            <a href="javascript:">查看访问最多的IP</a>
+            <a href="javascript:">登录频繁的用户</a>
+            <a href="javascript:">注册频繁的IP</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+
+    </script>
+{% endblock %}

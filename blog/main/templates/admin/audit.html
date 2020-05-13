@@ -1,0 +1,101 @@
+{% extends 'admin/admin.html' %}
+
+{% block style %}
+    {{ super() }}
+    <style>
+        .content {
+            padding-top: 20px;
+            height: auto;
+        }
+
+        #audit-blog {
+            background: #066;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #area {
+            width: 1140px;
+            margin-left: -10px;
+            border: #888888 5px;
+            border-style: solid none;
+        }
+
+        #show-area img {
+            width: 1110px;
+        }
+
+        #show-area {
+            width: 1120px;
+            margin-left: 10px;
+        }
+
+        #show-area img {
+            border-radius: 3px;
+            box-shadow: rgba(0, 0, 0, 0.15) 0 0 8px;
+            background: #FBFBFB;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+
+        #title, #author {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #title {
+            font-size: 26px;
+            font-weight: bold;
+            width: 600px;
+        }
+
+        #author {
+            margin: 5px 0 5px 0;
+        }
+
+        #author a {
+            color: #8c8c8c;
+        }
+
+        #publishTime {
+            color: #8c8c8c;
+            text-align: right;
+            margin: 0 auto 0 auto;
+        }
+
+        #manage-blog {
+            margin-bottom: -20px;
+        }
+
+        #deleted {
+            left: 90px;
+        }
+
+        #manage-blog label {
+            margin-left: 40px;
+        }
+
+        #reason {
+            width: 400px;
+        }
+
+        #confirm-reason {
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="type"></div>
+    <div id="title"></div>
+    <div id="author" class="author"></div>
+    <div id="publishTime"></div>
+    <div id="area">
+        <div id="show-area" class="clearfix"></div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/showdown.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/admin/audit.js') }}"></script>
+{% endblock %}
