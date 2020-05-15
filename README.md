@@ -192,14 +192,63 @@
 
 # Typeblogsresource
 
-## GET
+## GET(获取某类型下全部文章的标题)
 
 #### url
-- /blktype/<int:id>
+- /blktype/id
 
 #### doc
 ```
         通过类型筛选blog
+```
+
+#### args
+
+| 参数 | 是否必需 | 数据类型 | 默认值 | 描述           |
+| ---- | -------- | -------- | ------ | -------------- |
+| id   | 是       | 整型     | 无     | 要查询的类型ID |
+
+#### returns
+
+```json
+{
+  "msg": "ok",
+  "count": 42,
+  "data": [
+    {
+      "id": 89,
+      "type": "44",
+      "title": "许多年前用过，不知道现在微机课还教不教打字。最喜欢的还是后面那个打字游戏。打地鼠",
+      "user_id": 19,
+      "username": "tom",
+      "publish_time": "2020-05-05T23:01:18",
+      "url": "http://127.0.0.1:5000/blog/89",
+      "comments": 0,
+      "latest_comment": null
+    },
+    {
+      "id": 100,
+      "type": "44",
+      "title": "许多年前用过，不知道现在微机课还教不教打字。最喜欢的还是后面那个打字游戏。打地鼠",
+      "user_id": 19,
+      "username": "tom",
+      "publish_time": "2020-05-05T23:01:18",
+      "url": "http://127.0.0.1:5000/blog/100",
+      "comments": 0,
+      "latest_comment": null
+    },
+    {
+      "id": 111,
+      "type": "44",
+      "title": "许多年前用过，不知道现在微机课还教不教打字。最喜欢的还是后面那个打字游戏。打地鼠",
+      "user_id": 19,
+      "username": "tom",
+      "publish_time": "2020-05-05T23:01:18",
+      "url": "http://127.0.0.1:5000/blog/111",
+      "comments": 0,
+      "latest_comment": null
+    }]
+}
 ```
 
 
