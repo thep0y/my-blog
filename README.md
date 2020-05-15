@@ -1,8 +1,10 @@
 # 部分开发文档
 
-# Allarticlesresource
+# Blog APIs
 
-## GET(获取全部全部已验证、未封禁且未删除文章的标题)
+## 1 Allarticlesresource
+
+### GET(获取全部全部已验证、未封禁且未删除文章的标题)
 
 #### url
 - /allarts
@@ -67,10 +69,11 @@
 }
 ```
 
+# Comment APIs
 
-# Blogtypemanage
+## 2 Blogtypemanage
 
-## GET(获取全部文章类型)
+### GET(获取全部文章类型)
 
 #### url
 - /types
@@ -81,21 +84,9 @@
 ```
 
 
-## GET(获取全部文章类型)
+## 3 Commentsresource
 
-#### url
-- /types/
-
-#### doc
-```
-        无需权限和认证，任何人都可以查询文章类型
-```
-
-
-
-# Commentsresource
-
-## GET(获取当前文章下全部已验证、未删除且未封禁的评论)
+### GET(获取当前文章下全部已验证、未删除且未封禁的评论)
 
 #### url
 - /comments
@@ -155,7 +146,7 @@
 }
 ```
 
-## POST(增加评论)
+### POST(增加评论)
 
 #### url
 - /comments
@@ -189,10 +180,11 @@
 ```
 
 
+# 4 Admin APIs
 
-# Typeblogsresource
+## Typeblogsresource
 
-## GET(获取某类型下全部文章的标题)
+### GET(获取某类型下全部文章的标题)
 
 #### url
 - /blktype/id
