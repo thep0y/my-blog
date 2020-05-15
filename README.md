@@ -180,9 +180,9 @@
 ```
 
 
-# 4 Admin APIs
+# Admin APIs
 
-## Typeblogsresource
+## 4 Typeblogsresource
 
 ### GET(获取某类型下全部文章的标题)
 
