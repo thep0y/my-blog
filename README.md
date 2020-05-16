@@ -193,7 +193,7 @@
 ### GET(获取某类型下全部文章的标题)
 
 #### url
-- /blktype/id
+- /blktype/<id>
 
 #### doc
 ```
