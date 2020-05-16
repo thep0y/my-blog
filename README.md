@@ -1,3 +1,9 @@
+# 简要实现内容
+- redis 进行缓存，结合 cache 实现身份验证
+- celery 异步发送邮件
+- jwt 进行身份验证
+
+
 # 部分开发文档
 
 # Blog APIs
